@@ -5,11 +5,7 @@
       class="relative bg-gradient-to-r from-blue-700 to-indigo-800 text-white py-24 overflow-hidden"
     >
       <div class="absolute inset-0 bg-pattern opacity-20"></div>
-      <div class="absolute inset-0 overflow-hidden">
-        <div
-          class="absolute inset-0 bg-[url('/images/library-bg.jpg')] bg-cover bg-center opacity-20"
-        ></div>
-      </div>
+      <div class="absolute inset-0 overflow-hidden"></div>
       <div class="container mx-auto px-6 text-center relative z-10">
         <h1 class="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
           Selamat Datang di DIPUSIPDA
