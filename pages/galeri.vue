@@ -17,17 +17,13 @@
 
     <!-- Galeri Content -->
     <section class="container mx-auto px-6 py-12">
-      <div v-if="loading" class="text-center text-gray-600">
-        Memuat galeri...
-      </div>
-      <div v-else-if="error" class="text-center text-red-600">{{ error }}</div>
-      <div
-        v-else-if="galeriItems.length === 0"
-        class="text-center text-gray-600"
-      >
+      <div v-if="galeriItems.length === 0" class="text-center text-gray-600">
         Tidak ada data galeri yang ditemukan untuk saat ini.
       </div>
-      <div v-else class="grid grid-cols-5">
+      <div
+        v-else
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"
+      >
         <div
           v-for="(item, index) in galeriItems"
           :key="index"
@@ -37,7 +33,7 @@
             :src="item.img"
             :alt="item.title"
             class="w-full h-40 object-cover rounded-lg shadow-md pt-1 px-1"
-            @error="item.img = '/default-image.jpg'"
+            @error="handleImageError(item, index)"
           />
           <div
             class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-opacity duration-300 flex items-center justify-center"
@@ -56,40 +52,104 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 
 definePageMeta({
   layout: "default",
 });
 
-const galeriItems = ref([]);
-const loading = ref(true);
-const error = ref(null);
+// Data statis untuk galeri
+const galeriItems = ref([
+  {
+    img: "https://imgur.com/CvL6SI8.jpg",
+    title: "Juara Lomba Bercerita Tingkat SD",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/ksh4JkF.jpg",
+    title: "Lomba Bercerita Tingkat SD",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/IULdcJ6.jpg",
+    title: "Musrenbang 2020",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/D0k8IDJ.jpg",
+    title: "Foto bersama setelah acara selesai",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/fZkfk6CY.jpg",
+    title: "Pembagian bingkisan setelah bercerita",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/6poZ2KF.jpg",
+    title:
+      "Ibu Dra. Norng Rosmayati selaku Sekretaris Dinas sedang memberikan sosialisasi tentang literasi",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/4CnIzLK.jpg",
+    title:
+      "Pak Hasriadi selaku seksi pembinaan perpustakaan dan pengelolaan budaya baca sedang memberikan sosialisasi tentang literasi",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/q5M8EYW.jpg",
+    title: "Ketika mendengarkan cerita berasal kasitel imaji",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/BtFQ0BQ.jpg",
+    title: "Ketika mendengarkan cerita berasal kasitel imaji",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/kGUjTjG.jpg",
+    title: "Rombongan TK Paud mengikuti kegiatan bercerita",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/qRj2EPG.jpg",
+    title: "Rombongan TK Paud mengikuti kegiatan bercerita",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/jDWDmAF.jpg",
+    title: "Foto bersama setelah Kegiatan story telling",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/M7zQI40.jpg",
+    title: "Foto bersama setelah Kegiatan story telling",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/7D5fVWN.jpg",
+    title:
+      "Ibu Sekretaris Dinas Perpustakaan dan Kearsipan Derah Kota Tasikmalaya menyampaikan tentang literasi",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/pvN7VDK.jpg",
+    title: "Kegiatan story telling",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/0KR0IZD.jpg",
+    title: "Kegiatan story telling",
+    href: "#",
+  },
+]);
 
-// Fungsi untuk mengambil data galeri dari API kustom
-const fetchGaleri = async () => {
-  try {
-    const response = await $fetch("/api/galeri");
-    if (response.error) {
-      throw new Error(response.error);
-    }
-    galeriItems.value = response;
-  } catch (err) {
-    error.value = `Gagal memuat galeri: ${err.message}`;
-    console.error("Error fetching galeri:", err);
-    galeriItems.value = [
-      {
-        img: "/default-image.jpg",
-        title: "Kegiatan Tidak Tersedia",
-        href: "#",
-      },
-    ];
-  } finally {
-    loading.value = false;
-  }
+// Fungsi untuk menangani error saat gambar gagal dimuat
+const handleImageError = (item, index) => {
+  console.log(`Gambar gagal dimuat untuk item ${index}: ${item.title}`);
+  item.img = "https://via.placeholder.com/300x200?text=Gambar+Tidak+Tersedia";
 };
-
-onMounted(fetchGaleri);
 </script>
 
 <style scoped>

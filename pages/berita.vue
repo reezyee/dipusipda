@@ -18,51 +18,48 @@
     <!-- Berita Content -->
     <section class="container mx-auto px-6 py-12">
       <div class="max-w-4xl mx-auto space-y-8">
-        <div v-if="pending" class="text-center text-gray-600">
-          Memuat berita...
-        </div>
-        <div v-else-if="error" class="text-center text-red-600">
-          {{ error.message }}
-        </div>
-        <div v-else-if="berita.length === 0" class="text-center text-gray-600">
-          Tidak ada berita yang ditemukan untuk saat ini.
-        </div>
-        <div
-          v-else
-          v-for="(item, index) in berita"
-          :key="index"
-          class="bg-white p-6 rounded-lg shadow-md flex items-start space-x-4"
-        >
-          <img
-            v-if="item.img !== 'Gambar tidak tersedia'"
-            :src="item.img"
-            alt="Gambar Berita"
-            class="w-32 h-32 object-cover rounded-md"
-          />
-          <svg
-            v-else
-            class="w-32 h-32 text-gray-400 flex-shrink-0"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+        <!-- Animasi Loading -->
+        <div v-if="isLoading" class="space-y-8">
+          <div
+            v-for="i in 3"
+            :key="i"
+            class="bg-white p-6 rounded-lg shadow-md flex items-start space-x-4 animate-pulse"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+            <div class="w-32 h-32 bg-gray-300 rounded-md"></div>
+            <div class="flex-1">
+              <div class="h-6 bg-gray-300 rounded w-3/4 mb-2"></div>
+              <div class="h-4 bg-gray-300 rounded w-1/4 mb-2"></div>
+              <div class="h-4 bg-gray-300 rounded w-full"></div>
+              <div class="h-4 bg-gray-300 rounded w-5/6 mt-1"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Daftar Berita -->
+        <div v-else class="space-y-8">
+          <div
+            v-for="news in newsList"
+            :key="news.id"
+            class="bg-white p-6 rounded-lg shadow-md flex items-start space-x-4 hover:shadow-lg transition-shadow duration-300"
+          >
+            <img
+              :src="news.image"
+              alt="News Image"
+              class="w-32 h-32 object-cover rounded-md"
             />
-          </svg>
-          <div>
-            <h2 class="text-xl font-semibold text-gray-800">
-              {{ item.judul }}
-            </h2>
-            <p class="text-gray-600 text-sm mt-1">
-              {{ item.tanggal }} - {{ item.sumber }}
-            </p>
-            <p class="text-gray-700 text-md leading-5 mt-2">
-              {{ item.deskripsi }}
-            </p>
+            <div class="flex-1">
+              <h2 class="text-xl font-semibold text-gray-800">
+                <nuxt-link :to="`/berita/${news.id}`" class="hover:underline">
+                  {{ news.title }}
+                </nuxt-link>
+              </h2>
+              <p class="text-gray-600 text-sm mt-1">
+                {{ news.date }} - Dinas Perpustakaan dan Kearsipan
+              </p>
+              <p class="text-gray-700 text-md leading-5 mt-2">
+                {{ news.excerpt }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -71,12 +68,47 @@
 </template>
 
 <script setup>
-definePageMeta({
-  layout: 'default',
-});
-const { data: berita, pending, error } = useFetch("/api/berita");
+import { ref, onMounted } from "vue";
 
-console.log("Data berita:", berita);
+// State untuk loading dan daftar berita
+const isLoading = ref(true);
+const newsList = ref([
+{
+    id: "102722",
+    title: "PERCEPATAN PERTUMBUHAN EKONOMI DAN PENINGKATAN PELAYANAN DASAR UNTUK KEMAJUAN DAN KESEJAHTERAAN MASYARAKAT",
+    image: "https://dipusipda.tasikmalayakota.go.id/frontend/web/upload/_berita.jpeg",
+    date: "Sabtu, 01 Maret 2025 - 09:05:21",
+    excerpt: "Staf Ahli Wali Kota Tasikmalaya, Elly Suminar mengatakan Dinas Perpustakaan dan Kearsipan Daerah Kota Tasikmalaya memegang peranan krusial...",
+  },
+  {
+    id: "102723",
+    title: "RAKORNAS BIDANG PERPUSTAKAAN 2025, MENTERI DIKDASMEN: PENINGKATAN BUDAYA BACA DAN KECAKAPAN LITERASI UNTUK MEMBANGUN PERADABAN BANGSA",
+    image: "https://dipusipda.tasikmalayakota.go.id/frontend/web/upload/_berita.jpg",
+    date: "Minggu, 02 Maret 2025 - 10:15:30",
+    excerpt: "Menteri Pendidikan Dasar dan Menengah (Dikdasmen) Abdul Mu’ti menyatakan komitmennya untuk terus meningkatkan buda...",
+  },
+  {
+    id: "102724",
+    title: "LAUNCHING APLIKASI SRIKANDI DI LINGKUNGAN PEMERINTAH KOTA TASIKMALAYA",
+    image: "https://dipusipda.tasikmalayakota.go.id/frontend/web/upload/102269_gambar.png",
+    date: "Senin, 03 Maret 2025 - 08:30:45",
+    excerpt: "Dinas Perpustakaan dan Kearsipan Daerah Kota Tasikmalaya resmi meluncurkan aplikasi Sistem Informasi Kearsipan Dinamis Terintegrasi (SRIKANDI)...",
+  },
+  {
+    id: "102725",
+    title: "WORKSHOP NASIONAL LITERASI DIGITAL 2025",
+    image: "https://dipusipda.tasikmalayakota.go.id/frontend/web/upload/102270_gambar.png",
+    date: "Selasa, 04 Maret 2025 - 13:45:00",
+    excerpt: "Pemerintah Kota Tasikmalaya menyelenggarakan Workshop Nasional Literasi Digital untuk meningkatkan kesadaran dan pemanfaatan teknologi...",
+  },
+]);
+
+// Simulasi loading selama 2 detik
+onMounted(() => {
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 2000);
+});
 </script>
 
 <style scoped>

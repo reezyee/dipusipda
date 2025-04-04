@@ -1,11 +1,9 @@
 <template>
   <div class="bg-gray-50">
-    <!-- Hero Section with Background Image and Animation -->
     <section
       class="relative bg-gradient-to-r from-blue-700 to-indigo-800 text-white py-24 overflow-hidden"
     >
       <div class="absolute inset-0 bg-pattern opacity-20"></div>
-      <div class="absolute inset-0 overflow-hidden"></div>
       <div class="container mx-auto px-6 text-center relative z-10">
         <h1 class="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
           Selamat Datang di DIPUSIPDA
@@ -40,7 +38,6 @@
       </div>
     </section>
 
-    <!-- Statistik with Animation -->
     <section class="container mx-auto px-6 py-16 -mt-8">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div
@@ -128,7 +125,6 @@
       </div>
     </section>
 
-    <!-- Layanan Kami with Enhanced UI -->
     <section class="py-16 bg-gradient-to-b from-white to-gray-100">
       <div class="container mx-auto px-6">
         <div class="text-center mb-12">
@@ -173,9 +169,8 @@
                 <NuxtLink
                   to="/perpustakaan/layanan"
                   class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-all duration-300"
+                  >Lihat Layanan</NuxtLink
                 >
-                  Lihat Layanan
-                </NuxtLink>
               </div>
             </div>
           </div>
@@ -212,9 +207,8 @@
                 <NuxtLink
                   to="/kearsipan/layanan"
                   class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-all duration-300"
+                  >Lihat Layanan</NuxtLink
                 >
-                  Lihat Layanan
-                </NuxtLink>
               </div>
             </div>
           </div>
@@ -250,9 +244,8 @@
                 <NuxtLink
                   to="/berita"
                   class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-all duration-300"
+                  >Baca Berita</NuxtLink
                 >
-                  Baca Berita
-                </NuxtLink>
               </div>
             </div>
           </div>
@@ -260,7 +253,6 @@
       </div>
     </section>
 
-    <!-- Carousel Berita Terbaru (Improved) -->
     <section class="py-16 bg-white">
       <div class="container mx-auto px-6">
         <div class="text-center mb-12">
@@ -271,30 +263,7 @@
           </p>
         </div>
 
-        <div v-if="loading" class="flex justify-center items-center h-64">
-          <div
-            class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-600"
-          ></div>
-        </div>
-
-        <div v-else-if="error" class="text-center py-12 bg-red-50 rounded-xl">
-          <svg
-            class="w-16 h-16 text-red-500 mx-auto mb-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <p class="text-red-600 text-lg font-medium">{{ error }}</p>
-        </div>
-
-        <div v-else class="relative">
+        <div class="relative">
           <div class="overflow-hidden rounded-xl shadow-xl">
             <div
               class="flex transition-transform duration-500 ease-in-out"
@@ -310,9 +279,9 @@
                 >
                   <img
                     :src="news.img"
-                    alt="Berita"
+                    :alt="news.judul"
                     class="w-full md:w-64 h-48 object-cover rounded-lg shadow-md"
-                    @error="news.img = '/default-image.jpg'"
+                    @error="news.img = 'https://via.placeholder.com/150'"
                   />
                   <div class="flex-1">
                     <span
@@ -325,14 +294,11 @@
                       {{ news.judul }}
                     </h3>
                     <p class="text-gray-600 mb-4 line-clamp-3">
-                      {{
-                        news.excerpt ||
-                        "Baca selengkapnya untuk mengetahui lebih detail tentang berita ini."
-                      }}
+                      {{ news.deskripsi }}
                     </p>
                     <div class="flex items-center justify-between">
                       <span class="text-sm text-gray-500"
-                        >Sumber: {{ news.sumber }}</span
+                        >Sumber: DIPUSIPDA</span
                       >
                       <NuxtLink
                         to="/berita"
@@ -359,8 +325,6 @@
               </div>
             </div>
           </div>
-
-          <!-- Navigation dots -->
           <div class="flex justify-center mt-6 space-x-2">
             <button
               v-for="(_, index) in newsItems"
@@ -372,8 +336,6 @@
               "
             ></button>
           </div>
-
-          <!-- Prev/Next buttons -->
           <button
             @click="prevSlide"
             class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white text-blue-600 p-3 rounded-full hover:bg-blue-600 hover:text-white shadow-lg transition-all duration-300"
@@ -416,7 +378,6 @@
       </div>
     </section>
 
-    <!-- Galeri Kegiatan (Improved with API data) -->
     <section class="py-16 bg-gray-100">
       <div class="container mx-auto px-6">
         <div class="text-center mb-12">
@@ -428,21 +389,25 @@
         </div>
 
         <div
-          v-if="galleryLoading"
+          v-if="galleryPending"
           class="flex justify-center items-center h-64"
         >
           <div
             class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-600"
           ></div>
         </div>
-
         <div
           v-else-if="galleryError"
           class="text-center py-12 bg-red-50 rounded-xl"
         >
           <p class="text-red-600">{{ galleryError }}</p>
         </div>
-
+        <div
+          v-else-if="!galleryItems || galleryItems.length === 0"
+          class="text-center text-gray-600"
+        >
+          Tidak ada galeri tersedia.
+        </div>
         <div
           v-else
           class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
@@ -457,6 +422,7 @@
               :src="item.img"
               :alt="item.title"
               class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+              @error="item.img = 'https://via.placeholder.com/150'"
             />
             <div
               class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -467,18 +433,14 @@
             </div>
           </div>
         </div>
-
-        <!-- View All Button -->
         <div class="text-center mt-10">
           <NuxtLink
             to="/galeri"
             class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition-all duration-300 shadow-lg"
+            >Lihat Semua Galeri</NuxtLink
           >
-            Lihat Semua Galeri
-          </NuxtLink>
         </div>
 
-        <!-- Lightbox Modal -->
         <div
           v-if="lightboxActive"
           class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center"
@@ -502,7 +464,6 @@
               />
             </svg>
           </button>
-
           <div class="max-w-5xl max-h-[80vh] relative" @click.stop>
             <img
               :src="galleryItems[currentLightboxIndex].img"
@@ -515,7 +476,6 @@
               </h3>
             </div>
           </div>
-
           <button
             @click.stop="nextLightboxImage"
             class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white p-2 rounded-full bg-black/50 hover:bg-black/70"
@@ -534,7 +494,6 @@
               />
             </svg>
           </button>
-
           <button
             @click.stop="closeLightbox"
             class="absolute top-4 right-4 text-white p-2 rounded-full bg-black/50 hover:bg-black/70"
@@ -560,22 +519,67 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 
-definePageMeta({
-  layout: "default",
-});
+definePageMeta({ layout: "default" });
 
-// News
-const newsItems = ref([]);
-const loading = ref(true);
-const error = ref(null);
+// Static news data
+const newsItems = ref([
+  {
+    id: "102722",
+    judul:
+      "PERCEPATAN PERTUMBUHAN EKONOMI DAN PENINGKATAN PELAYANAN DASAR UNTUK KEMAJUAN DAN KESEJAHTERAAN MASYARAKAT",
+    img: "https://dipusipda.tasikmalayakota.go.id/frontend/web/upload/_berita.jpeg",
+    tanggal: "Sabtu, 01 Maret 2025 - 09:05:21",
+    deskripsi:
+      "Staf Ahli Wali Kota Tasikmalaya, Elly Suminar mengatakan Dinas Perpustakaan dan Kearsipan Daerah Kota Tasikmalaya memegang peranan krusial...",
+  },
+  {
+    id: "102723",
+    judul:
+      "RAKORNAS BIDANG PERPUSTAKAAN 2025, MENTERI DIKDASMEN: PENINGKATAN BUDAYA BACA DAN KECAKAPAN LITERASI UNTUK MEMBANGUN PERADABAN BANGSA",
+    img: "https://dipusipda.tasikmalayakota.go.id/frontend/web/upload/_berita.jpg",
+    tanggal: "Minggu, 02 Maret 2025 - 10:15:30",
+    deskripsi:
+      "Menteri Pendidikan Dasar dan Menengah (Dikdasmen) Abdul Mu’ti menyatakan komitmennya untuk terus meningkatkan buda...",
+  },
+  {
+    id: "102724",
+    judul:
+      "LAUNCHING APLIKASI SRIKANDI DI LINGKUNGAN PEMERINTAH KOTA TASIKMALAYA",
+    img: "https://dipusipda.tasikmalayakota.go.id/frontend/web/upload/102269_gambar.png",
+    tanggal: "Senin, 03 Maret 2025 - 08:30:45",
+    deskripsi:
+      "Dinas Perpustakaan dan Kearsipan Daerah Kota Tasikmalaya resmi meluncurkan aplikasi Sistem Informasi Kearsipan Dinamis Terintegrasi (SRIKANDI)...",
+  },
+  {
+    id: "102725",
+    judul: "WORKSHOP NASIONAL LITERASI DIGITAL 2025",
+    img: "https://dipusipda.tasikmalayakota.go.id/frontend/web/upload/102270_gambar.png",
+    tanggal: "Selasa, 04 Maret 2025 - 13:45:00",
+    deskripsi:
+      "Pemerintah Kota Tasikmalaya menyelenggarakan Workshop Nasional Literasi Digital untuk meningkatkan kesadaran dan pemanfaatan teknologi...",
+  },
+  {
+    id: "102726",
+    judul: "PENGEMBANGAN PERPUSTAKAAN BERBASIS INKLUSI SOSIAL",
+    img: "https://dipusipda.tasikmalayakota.go.id/frontend/web/upload/102271_gambar.jpg",
+    tanggal: "Rabu, 05 Maret 2025 - 15:20:10",
+    deskripsi:
+      "Dalam rangka meningkatkan akses literasi bagi masyarakat, Dinas Perpustakaan dan Kearsipan Daerah Kota Tasikmalaya meluncurkan program inklusi sosial...",
+  },
+]);
+
 const currentSlide = ref(0);
 
-// Gallery
-const galleryItems = ref([]);
-const galleryLoading = ref(true);
-const galleryError = ref(null);
+// Gallery (unchanged)
+const {
+  data: galleryItems,
+  pending: galleryPending,
+  error: galleryError,
+} = useFetch("/api/galeri", {
+  transform: (data) => (data.error ? [] : data.slice(0, 8)),
+});
 const lightboxActive = ref(false);
 const currentLightboxIndex = ref(0);
 
@@ -593,7 +597,7 @@ const animateCounters = () => {
       if (count < target) {
         count += increment;
         counter.innerText = Math.ceil(count).toLocaleString() + "+";
-        setTimeout(updateCount, 1);
+        requestAnimationFrame(updateCount);
       } else {
         counter.innerText = target.toLocaleString() + "+";
       }
@@ -601,108 +605,6 @@ const animateCounters = () => {
 
     updateCount();
   });
-};
-
-// Fetch news data
-const fetchNews = async () => {
-  try {
-    const response = await $fetch("/api/berita");
-    if (response.error) {
-      throw new Error(response.error);
-    }
-
-    // Add excerpt for each news item
-    newsItems.value = response.slice(0, 5).map((item) => ({
-      ...item,
-      excerpt:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris feugiat arcu sed libero feugiat, non fermentum urna dictum. Donec vel purus in dolor molestie.",
-    }));
-  } catch (err) {
-    error.value = `Gagal memuat berita: ${err.message}`;
-    console.error("Error fetching news:", err);
-
-    // Fallback data if API fails
-    newsItems.value = [
-      {
-        img: "/images/news1.jpg",
-        judul: "Peningkatan Kompetensi Pengelola Perpustakaan",
-        tanggal: "13 Maret 2025",
-        sumber: "DIPUSIPDA Tasikmalaya",
-        excerpt:
-          "Program peningkatan kompetensi bagi pengelola perpustakaan yang diselenggarakan oleh DIPUSIPDA Kota Tasikmalaya telah berhasil melatih 50 pustakawan dari berbagai institusi.",
-      },
-      {
-        img: "/images/news2.jpg",
-        judul: "Pameran Buku dan Literasi 2025",
-        tanggal: "28 Februari 2025",
-        sumber: "DIPUSIPDA Tasikmalaya",
-        excerpt:
-          "DIPUSIPDA menggelar pameran buku dan literasi terbesar di Kota Tasikmalaya yang menghadirkan puluhan penerbit dan ribuan judul buku terbaru.",
-      },
-      {
-        img: "/images/news3.jpg",
-        judul: "Digitalisasi Arsip Daerah Tahap II",
-        tanggal: "15 Februari 2025",
-        sumber: "DIPUSIPDA Tasikmalaya",
-        excerpt:
-          "Tahap kedua program digitalisasi arsip daerah telah mencapai 70% dari target total. Program ini bertujuan untuk melestarikan dan memudahkan akses dokumen penting.",
-      },
-    ];
-  } finally {
-    loading.value = false;
-  }
-};
-
-const fetchGallery = async () => {
-  try {
-    const response = await $fetch("/api/galeri");
-    if (response.error) {
-      throw new Error(response.error);
-    }
-
-    galleryItems.value = response.slice(0, 8);
-  } catch (err) {
-    galleryError.value = `Gagal memuat galeri: ${err.message}`;
-    console.error("Error fetching gallery:", err);
-
-    // Fallback data if API fails
-    galleryItems.value = [
-      {
-        img: "/images/gallery1.jpg",
-        title: "Seminar Literasi Digital 2025",
-      },
-      {
-        img: "/images/gallery2.jpg",
-        title: "Kunjungan Sekolah ke Perpustakaan",
-      },
-      {
-        img: "/images/gallery3.jpg",
-        title: "Workshop Pengelolaan Arsip",
-      },
-      {
-        img: "/images/gallery4.jpg",
-        title: "Pelatihan Pustakawan Daerah",
-      },
-      {
-        img: "/images/gallery5.jpg",
-        title: "Pameran Buku Tahunan",
-      },
-      {
-        img: "/images/gallery6.jpg",
-        title: "Lomba Bercerita Anak",
-      },
-      {
-        img: "/images/gallery7.jpg",
-        title: "Bedah Buku dengan Penulis Lokal",
-      },
-      {
-        img: "/images/gallery8.jpg",
-        title: "Hari Arsip Nasional",
-      },
-    ];
-  } finally {
-    galleryLoading.value = false;
-  }
 };
 
 // Carousel functions
@@ -741,9 +643,7 @@ const prevLightboxImage = () => {
 // Auto rotate carousel
 let carouselInterval;
 const startCarouselInterval = () => {
-  carouselInterval = setInterval(() => {
-    nextSlide();
-  }, 5000);
+  carouselInterval = setInterval(nextSlide, 5000);
 };
 
 const stopCarouselInterval = () => {
@@ -751,14 +651,8 @@ const stopCarouselInterval = () => {
 };
 
 onMounted(() => {
-  // Fetch data
-  fetchNews();
-  fetchGallery();
-
-  // Start carousel
   startCarouselInterval();
 
-  // Animate counters on scroll
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -772,20 +666,11 @@ onMounted(() => {
   );
 
   const counterSection = document.querySelector(".counter");
-  if (counterSection) {
-    observer.observe(counterSection);
-  }
+  if (counterSection) observer.observe(counterSection);
 });
 
-// Clean up intervals when component unmounts
 onUnmounted(() => {
   stopCarouselInterval();
-});
-
-// Reset carousel interval when slide changes manually
-watch(currentSlide, () => {
-  stopCarouselInterval();
-  startCarouselInterval();
 });
 </script>
 
@@ -799,5 +684,20 @@ watch(currentSlide, () => {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>
