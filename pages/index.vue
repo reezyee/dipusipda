@@ -388,24 +388,7 @@
           </p>
         </div>
 
-        <div
-          v-if="galleryPending"
-          class="flex justify-center items-center h-64"
-        >
-          <div
-            class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-600"
-          ></div>
-        </div>
-        <div
-          v-else-if="galleryError"
-          class="text-center py-12 bg-red-50 rounded-xl"
-        >
-          <p class="text-red-600">{{ galleryError }}</p>
-        </div>
-        <div
-          v-else-if="!galleryItems || galleryItems.length === 0"
-          class="text-center text-gray-600"
-        >
+        <div v-if="galeriItems.length === 0" class="text-center text-gray-600">
           Tidak ada galeri tersedia.
         </div>
         <div
@@ -413,7 +396,7 @@
           class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
         >
           <div
-            v-for="(item, index) in galleryItems"
+            v-for="(item, index) in galeriItems.slice(0, 8)"
             :key="index"
             class="group relative rounded-xl overflow-hidden shadow-lg h-64 cursor-pointer"
             @click="openLightbox(index)"
@@ -466,13 +449,13 @@
           </button>
           <div class="max-w-5xl max-h-[80vh] relative" @click.stop>
             <img
-              :src="galleryItems[currentLightboxIndex].img"
-              :alt="galleryItems[currentLightboxIndex].title"
+              :src="galeriItems[currentLightboxIndex].img"
+              :alt="galeriItems[currentLightboxIndex].title"
               class="max-w-full max-h-[80vh] object-contain"
             />
             <div class="absolute bottom-0 left-0 right-0 bg-black/70 p-4">
               <h3 class="text-white font-medium text-xl">
-                {{ galleryItems[currentLightboxIndex].title }}
+                {{ galeriItems[currentLightboxIndex].title }}
               </h3>
             </div>
           </div>
@@ -572,14 +555,93 @@ const newsItems = ref([
 
 const currentSlide = ref(0);
 
-// Gallery (unchanged)
-const {
-  data: galleryItems,
-  pending: galleryPending,
-  error: galleryError,
-} = useFetch("/api/galeri", {
-  transform: (data) => (data.error ? [] : data.slice(0, 8)),
-});
+// Static gallery data
+const galeriItems = ref([
+  {
+    img: "https://imgur.com/CvL6SI8.jpg",
+    title: "Juara Lomba Bercerita Tingkat SD",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/ksh4JkF.jpg",
+    title: "Lomba Bercerita Tingkat SD",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/IULdcJ6.jpg",
+    title: "Musrenbang 2020",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/D0k8IDJ.jpg",
+    title: "Foto bersama setelah acara selesai",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/fZkfk6CY.jpg",
+    title: "Pembagian bingkisan setelah bercerita",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/6poZ2KF.jpg",
+    title:
+      "Ibu Dra. Norng Rosmayati selaku Sekretaris Dinas sedang memberikan sosialisasi tentang literasi",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/4CnIzLK.jpg",
+    title:
+      "Pak Hasriadi selaku seksi pembinaan perpustakaan dan pengelolaan budaya baca sedang memberikan sosialisasi tentang literasi",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/q5M8EYW.jpg",
+    title: "Ketika mendengarkan cerita berasal kasitel imaji",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/BtFQ0BQ.jpg",
+    title: "Ketika mendengarkan cerita berasal kasitel imaji",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/kGUjTjG.jpg",
+    title: "Rombongan TK Paud mengikuti kegiatan bercerita",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/qRj2EPG.jpg",
+    title: "Rombongan TK Paud mengikuti kegiatan bercerita",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/jDWDmAF.jpg",
+    title: "Foto bersama setelah Kegiatan story telling",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/M7zQI40.jpg",
+    title: "Foto bersama setelah Kegiatan story telling",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/7D5fVWN.jpg",
+    title:
+      "Ibu Sekretaris Dinas Perpustakaan dan Kearsipan Derah Kota Tasikmalaya menyampaikan tentang literasi",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/pvN7VDK.jpg",
+    title: "Kegiatan story telling",
+    href: "#",
+  },
+  {
+    img: "https://imgur.com/0KR0IZD.jpg",
+    title: "Kegiatan story telling",
+    href: "#",
+  },
+]);
+
 const lightboxActive = ref(false);
 const currentLightboxIndex = ref(0);
 
@@ -631,13 +693,13 @@ const closeLightbox = () => {
 
 const nextLightboxImage = () => {
   currentLightboxIndex.value =
-    (currentLightboxIndex.value + 1) % galleryItems.value.length;
+    (currentLightboxIndex.value + 1) % galeriItems.value.length;
 };
 
 const prevLightboxImage = () => {
   currentLightboxIndex.value =
-    (currentLightboxIndex.value - 1 + galleryItems.value.length) %
-    galleryItems.value.length;
+    (currentLightboxIndex.value - 1 + galeriItems.value.length) %
+    galeriItems.value.length;
 };
 
 // Auto rotate carousel
