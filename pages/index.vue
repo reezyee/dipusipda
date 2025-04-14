@@ -558,87 +558,88 @@ const currentSlide = ref(0);
 // Static gallery data
 const galeriItems = ref([
   {
-    img: "https://imgur.com/CvL6SI8.jpg",
+    img: "https://imgur.com/Cvl6SI8s.jpg",
+    href: "https://imgur.com/Cvl6SI8s.jpg",
     title: "Juara Lomba Bercerita Tingkat SD",
-    href: "#",
   },
   {
-    img: "https://imgur.com/ksh4JkF.jpg",
+    img: "https://imgur.com/ksh4jkFs.jpg",
+    href: "https://imgur.com/ksh4jkFs.jpg",
     title: "Lomba Bercerita Tingkat SD",
-    href: "#",
   },
   {
-    img: "https://imgur.com/IULdcJ6.jpg",
+    img: "https://imgur.com/IUldcJ6.jpg",
+  hrefg: "https://imgur.com/IUldcJ6.jpg",
     title: "Musrenbang 2020",
-    href: "#",
   },
   {
-    img: "https://imgur.com/D0k8IDJ.jpg",
+    img: "https://imgur.com/D0k8IDj.jpg",
+  hrefg: "https://imgur.com/D0k8IDj.jpg",
     title: "Foto bersama setelah acara selesai",
-    href: "#",
   },
   {
-    img: "https://imgur.com/fZkfk6CY.jpg",
+    img: "https://imgur.com/D0k8IDjs.jpg",
+    href: "https://imgur.com/D0k8IDjs.jpg",
     title: "Pembagian bingkisan setelah bercerita",
-    href: "#",
   },
+
   {
-    img: "https://imgur.com/6poZ2KF.jpg",
+    img: "https://imgur.com/fZkf6cY.jpg",
+  hrefg: "https://imgur.com/fZkf6cY.jpg",
     title:
       "Ibu Dra. Norng Rosmayati selaku Sekretaris Dinas sedang memberikan sosialisasi tentang literasi",
-    href: "#",
   },
   {
-    img: "https://imgur.com/4CnIzLK.jpg",
+    img: "https://imgur.com/6poz2KFs.jpg",
+    href: "https://imgur.com/6poz2KFs.jpg",
     title:
       "Pak Hasriadi selaku seksi pembinaan perpustakaan dan pengelolaan budaya baca sedang memberikan sosialisasi tentang literasi",
-    href: "#",
   },
   {
-    img: "https://imgur.com/q5M8EYW.jpg",
+    img: "https://imgur.com/jCnIzLks.jpg",
+    href: "https://imgur.com/jCnIzLks.jpg",
     title: "Ketika mendengarkan cerita berasal kasitel imaji",
-    href: "#",
   },
   {
-    img: "https://imgur.com/BtFQ0BQ.jpg",
-    title: "Ketika mendengarkan cerita berasal kasitel imaji",
-    href: "#",
+    img: "https://imgur.com/qSM8EYWs.jpg",
+    href: "https://imgur.com/qSM8EYWs.jpg",
+    title: "Ketika mendengarkan cerita berasal kasitel imaji .",
   },
   {
-    img: "https://imgur.com/kGUjTjG.jpg",
+    img: "https://imgur.com/kGuJjtgs.jpg",
+    href: "https://imgur.com/kGuJjtgs.jpg",
     title: "Rombongan TK Paud mengikuti kegiatan bercerita",
-    href: "#",
   },
   {
-    img: "https://imgur.com/qRj2EPG.jpg",
+    img: "https://imgur.com/qRj2EpGs.jpg",
+    href: "https://imgur.com/qRj2EpGs.jpg",
     title: "Rombongan TK Paud mengikuti kegiatan bercerita",
-    href: "#",
   },
   {
-    img: "https://imgur.com/jDWDmAF.jpg",
+    img: "https://imgur.com/jDWDmaFs.jpg",
+    href: "https://imgur.com/jDWDmaFs.jpg",
     title: "Foto bersama setelah Kegiatan story telling",
-    href: "#",
   },
   {
-    img: "https://imgur.com/M7zQI40.jpg",
+    img: "https://imgur.com/M7yQI4Qs.jpg",
+    href: "https://imgur.com/M7yQI4Qs.jpg",
     title: "Foto bersama setelah Kegiatan story telling",
-    href: "#",
   },
   {
-    img: "https://imgur.com/7D5fVWN.jpg",
+    img: "https://imgur.com/7DsfVWNs.jpg",
+    href: "https://imgur.com/7DsfVWNs.jpg",
     title:
       "Ibu Sekretaris Dinas Perpustakaan dan Kearsipan Derah Kota Tasikmalaya menyampaikan tentang literasi",
-    href: "#",
   },
   {
-    img: "https://imgur.com/pvN7VDK.jpg",
+    img: "https://imgur.com/pvn7VDks.jpg",
+    href: "https://imgur.com/pvn7VDks.jpg",
     title: "Kegiatan story telling",
-    href: "#",
   },
   {
-    img: "https://imgur.com/0KR0IZD.jpg",
+    img: "https://imgur.com/QKR0Izds.jpg",
+    href: "https://imgur.com/QKR0Izds.jpg",
     title: "Kegiatan story telling",
-    href: "#",
   },
 ]);
 
